@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hofstede Cultural Assessment</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0 10px; }
+    #container { max-width: 600px; margin: auto; }
+    h1 { font-size: 1.5em; text-align: center; }
+    .question { display: none; margin-top: 20px; }
+    .question.active { display: block; }
+    label { display: block; padding: 8px; border: 1px solid #ccc; border-radius: 4px; margin: 8px 0; }
+    input[type="radio"] { margin-right: 10px; }
+    .nav { margin-top: 20px; display: flex; justify-content: space-between; }
+    button { padding: 10px 20px; font-size: 1em; border: none; border-radius: 4px; background:#007BFF; color:#fff; }
+    #submitBtn { width:100%; margin-top:20px; background:#28a745; }
+    #result { margin-top: 20px; }
+    input[type="password"] { padding: 8px; width: 100%; box-sizing: border-box; }
+    #classProfile { margin-top: 20px; }
+  </style>
+</head>
+<body>
+<div id="container">
+<h1>Hofstede Cultural Assessment</h1>
+<form id="quizForm">
+  <div id="questions"></div>
+  <div class="nav">
+    <button type="button" id="backBtn">Back</button>
+    <button type="button" id="nextBtn">Next</button>
+  </div>
+  <button type="button" id="submitBtn" style="display:none;">Submit</button>
+</form>
+<div id="result"></div>
+<div id="classLink" style="display:none;margin-top:20px;">
+  <button type="button" id="viewClassBtn">View Class Profile</button>
+</div>
+<div id="passwordDiv" style="display:none;margin-top:20px;">
+  <input type="password" id="passwordInput" placeholder="Enter password">
+  <button type="button" id="passwordSubmit">Submit</button>
+</div>
+<div id="classProfile"></div>
+</div>
+<script>
+const questionsData = [
+  {dim:'PDI', text:'It is acceptable that power is distributed unequally in organizations.'},
+  {dim:'PDI', text:'I feel comfortable with clear hierarchical structures.'},
+  {dim:'PDI', text:'Employees should not question the decisions of their superiors.'},
+  {dim:'PDI', text:'Decision-making should rest with senior managers.'},
+  {dim:'IDV', text:'Personal success is more important than group loyalty.'},
+  {dim:'IDV', text:'I prefer working independently rather than in teams.'},
+  {dim:'IDV', text:'Individual rights should take precedence over group interests.'},
+  {dim:'IDV', text:'Being different from others is acceptable.'},
+  {dim:'MAS', text:'Achievement is more important than quality of life.'},
+  {dim:'MAS', text:'Competition leads to the best results.'},
+  {dim:'MAS', text:'Assertiveness is valued over modesty.'},
+  {dim:'MAS', text:'Gender roles should be clearly distinguished.'},
+  {dim:'UAI', text:'Rules and procedures help reduce uncertainty.'},
+  {dim:'UAI', text:'Ambiguous situations make me uncomfortable.'},
+  {dim:'UAI', text:'I prefer structured tasks over unstructured ones.'},
+  {dim:'UAI', text:'Planning ahead is important to me.'},
+  {dim:'LTO', text:'I focus on long-term goals rather than immediate results.'},
+  {dim:'LTO', text:'Tradition is less important than preparing for the future.'},
+  {dim:'LTO', text:'Persistence and thrift are virtues.'},
+  {dim:'LTO', text:'I am willing to adapt plans to new circumstances.'},
+  {dim:'IND', text:'Leisure time is essential to me.'},
+  {dim:'IND', text:'People should be free to gratify their desires.'},
+  {dim:'IND', text:'I openly express my feelings.'},
+  {dim:'IND', text:'Strict social norms can hinder personal enjoyment.'}
+];
+
+// shuffle questions
+const shuffled = questionsData.sort(() => Math.random() - 0.5);
+const questionsDiv = document.getElementById('questions');
+shuffled.forEach((q,i) => {
+  const div = document.createElement('div');
+  div.className = 'question';
+  div.id = 'q'+i;
+  div.innerHTML = `<p>${q.text}</p>` + [1,2,3,4,5].map(n => `<label><input type="radio" name="q${i}" value="${n}" required> ${n}</label>`).join('');
+  questionsDiv.appendChild(div);
+});
+
+let current = 0;
+const total = shuffled.length;
+const backBtn = document.getElementById('backBtn');
+const nextBtn = document.getElementById('nextBtn');
+const submitBtn = document.getElementById('submitBtn');
+
+function showQuestion(idx){
+  document.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
+  document.getElementById('q'+idx).classList.add('active');
+  backBtn.style.display = idx === 0 ? 'none' : 'inline-block';
+  nextBtn.style.display = idx === total-1 ? 'none' : 'inline-block';
+  submitBtn.style.display = idx === total-1 ? 'inline-block' : 'none';
+}
+showQuestion(current);
+
+nextBtn.addEventListener('click', ()=>{
+  const checked = document.querySelector('#q'+current+' input:checked');
+  if(!checked){
+    alert('Please select a response.');
+    return;
+  }
+  if(current < total-1){
+    current++;
+    showQuestion(current);
+  }
+});
+
+backBtn.addEventListener('click', ()=>{
+  if(current>0){
+    current--;
+    showQuestion(current);
+  }
+});
+
+submitBtn.addEventListener('click', ()=>{
+  const scores = {PDI:0, IDV:0, MAS:0, UAI:0, LTO:0, IND:0};
+  shuffled.forEach((q,i)=>{
+    const val = parseInt(document.querySelector(`input[name="q${i}"]:checked`).value);
+    scores[q.dim]+=val;
+  });
+  const interpret = {
+    PDI:'A high score indicates comfort with hierarchy; a low score suggests preference for equality.',
+    IDV:'High values reflect individualism; low values show collectivism.',
+    MAS:'High scores emphasize competition and achievement; low scores value caring and quality of life.',
+    UAI:'High scores show discomfort with uncertainty; low scores tolerate ambiguity.',
+    LTO:'High scores reveal long-term pragmatism; low scores focus on short-term and tradition.',
+    IND:'High scores represent indulgence; low scores indicate restraint and strict norms.'
+  };
+  const names = {
+    PDI:'Power Distance Index',
+    IDV:'Individualism vs. Collectivism',
+    MAS:'Masculinity vs. Femininity',
+    UAI:'Uncertainty Avoidance Index',
+    LTO:'Long-Term Orientation',
+    IND:'Indulgence vs. Restraint'
+  };
+  let html = "<h2>Your Cultural Profile</h2>";
+  Object.keys(scores).forEach(dim=>{
+    html += `<p><strong>${dim} - ${names[dim]}</strong>: ${scores[dim]} / 20<br>${interpret[dim]}</p>`;
+  });
+  document.getElementById("quizForm").style.display="none";
+  document.getElementById("result").innerHTML=html;
+  let all = JSON.parse(localStorage.getItem("hofstedeResults") || "[]");
+  all.push(scores);
+  localStorage.setItem("hofstedeResults", JSON.stringify(all));
+  document.getElementById("classLink").style.display="block";
+});
+const viewClassBtn = document.getElementById("viewClassBtn");
+const passwordDiv = document.getElementById("passwordDiv");
+const passwordInput = document.getElementById("passwordInput");
+const passwordSubmit = document.getElementById("passwordSubmit");
+const classProfile = document.getElementById("classProfile");
+viewClassBtn.addEventListener("click", ()=>{ passwordDiv.style.display = "block"; });
+passwordSubmit.addEventListener("click", ()=>{
+  if(passwordInput.value === "Essel@123"){
+    const data = JSON.parse(localStorage.getItem("hofstedeResults") || "[]");
+    if(data.length===0){
+      classProfile.innerHTML = "<p>No class data available.</p>";
+    }else{
+      const totals = {PDI:0, IDV:0, MAS:0, UAI:0, LTO:0, IND:0};
+      data.forEach(res=>{
+        Object.keys(totals).forEach(dim=>{ totals[dim]+=res[dim]; });
+      });
+      let html2 = "<h2>Class Cultural Profile</h2>";
+      Object.keys(totals).forEach(dim=>{
+        const avg = totals[dim]/data.length;
+        html2 += `<p><strong>${dim} - ${names[dim]}</strong>: ${avg.toFixed(2)} avg<br>${interpret[dim]}</p>`;
+      });
+      classProfile.innerHTML = html2;
+    }
+    passwordDiv.style.display = "none";
+  }else{
+    alert("Incorrect password");
+  }
+});
+</script>
+</body>
+</html>
