@@ -16,6 +16,8 @@
     button { padding: 10px 20px; font-size: 1em; border: none; border-radius: 4px; background:#007BFF; color:#fff; }
     #submitBtn { width:100%; margin-top:20px; background:#28a745; }
     #result { margin-top: 20px; }
+    input[type="password"] { padding: 8px; width: 100%; box-sizing: border-box; }
+    #classProfile { margin-top: 20px; }
   </style>
 </head>
 <body>
@@ -30,6 +32,14 @@
   <button type="button" id="submitBtn" style="display:none;">Submit</button>
 </form>
 <div id="result"></div>
+<div id="classLink" style="display:none;margin-top:20px;">
+  <button type="button" id="viewClassBtn">View Class Profile</button>
+</div>
+<div id="passwordDiv" style="display:none;margin-top:20px;">
+  <input type="password" id="passwordInput" placeholder="Enter password">
+  <button type="button" id="passwordSubmit">Submit</button>
+</div>
+<div id="classProfile"></div>
 </div>
 <script>
 const questionsData = [
@@ -126,12 +136,44 @@ submitBtn.addEventListener('click', ()=>{
     LTO:'Long-Term Orientation',
     IND:'Indulgence vs. Restraint'
   };
-  let html = '<h2>Your Cultural Profile</h2>';
+  let html = "<h2>Your Cultural Profile</h2>";
   Object.keys(scores).forEach(dim=>{
     html += `<p><strong>${dim} - ${names[dim]}</strong>: ${scores[dim]} / 20<br>${interpret[dim]}</p>`;
   });
-  document.getElementById('quizForm').style.display='none';
-  document.getElementById('result').innerHTML=html;
+  document.getElementById("quizForm").style.display="none";
+  document.getElementById("result").innerHTML=html;
+  let all = JSON.parse(localStorage.getItem("hofstedeResults") || "[]");
+  all.push(scores);
+  localStorage.setItem("hofstedeResults", JSON.stringify(all));
+  document.getElementById("classLink").style.display="block";
+});
+const viewClassBtn = document.getElementById("viewClassBtn");
+const passwordDiv = document.getElementById("passwordDiv");
+const passwordInput = document.getElementById("passwordInput");
+const passwordSubmit = document.getElementById("passwordSubmit");
+const classProfile = document.getElementById("classProfile");
+viewClassBtn.addEventListener("click", ()=>{ passwordDiv.style.display = "block"; });
+passwordSubmit.addEventListener("click", ()=>{
+  if(passwordInput.value === "Essel@123"){
+    const data = JSON.parse(localStorage.getItem("hofstedeResults") || "[]");
+    if(data.length===0){
+      classProfile.innerHTML = "<p>No class data available.</p>";
+    }else{
+      const totals = {PDI:0, IDV:0, MAS:0, UAI:0, LTO:0, IND:0};
+      data.forEach(res=>{
+        Object.keys(totals).forEach(dim=>{ totals[dim]+=res[dim]; });
+      });
+      let html2 = "<h2>Class Cultural Profile</h2>";
+      Object.keys(totals).forEach(dim=>{
+        const avg = totals[dim]/data.length;
+        html2 += `<p><strong>${dim} - ${names[dim]}</strong>: ${avg.toFixed(2)} avg<br>${interpret[dim]}</p>`;
+      });
+      classProfile.innerHTML = html2;
+    }
+    passwordDiv.style.display = "none";
+  }else{
+    alert("Incorrect password");
+  }
 });
 </script>
 </body>
