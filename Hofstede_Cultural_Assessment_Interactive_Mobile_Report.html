@@ -1,0 +1,581 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cultural Self-Assessment - Hofstede Model</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 10px;
+            padding: 10px;
+            max-width: 100%;
+            background: #fff;
+            color: #333;
+        }
+        .question {
+            display: none;
+            margin-bottom: 30px;
+        }
+        .active {
+            display: block;
+        }
+        h1 {
+            font-size: 1.4em;
+        }
+        h3 {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            margin: 8px 0;
+            background: #f8f8f8;
+            font-size: 1em;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 5px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+        }
+        #submitBtn {
+            width: 100%;
+            background-color: #28A745;
+            margin-top: 10px;
+        }
+        #report {
+            margin-top: 30px;
+            padding: 20px;
+            background: #e9f7ef;
+            border-left: 5px solid #28A745;
+            font-size: 1em;
+            line-height: 1.5em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cultural Self-Assessment (Hofstede Model)</h1>
+    <form id="assessmentForm">
+
+        <div class="question" id="q0">
+            <h3>I am comfortable with clear hierarchy in the workplace.</h3>
+        
+            <label><input type="radio" name="PDI_1" value="1" required> 1</label>
+            
+            <label><input type="radio" name="PDI_1" value="2" required> 2</label>
+            
+            <label><input type="radio" name="PDI_1" value="3" required> 3</label>
+            
+            <label><input type="radio" name="PDI_1" value="4" required> 4</label>
+            
+            <label><input type="radio" name="PDI_1" value="5" required> 5</label>
+            </div>
+
+        <div class="question" id="q1">
+            <h3>I expect leaders to make final decisions without much consultation.</h3>
+        
+            <label><input type="radio" name="PDI_2" value="1" required> 1</label>
+            
+            <label><input type="radio" name="PDI_2" value="2" required> 2</label>
+            
+            <label><input type="radio" name="PDI_2" value="3" required> 3</label>
+            
+            <label><input type="radio" name="PDI_2" value="4" required> 4</label>
+            
+            <label><input type="radio" name="PDI_2" value="5" required> 5</label>
+            </div>
+
+        <div class="question" id="q2">
+            <h3>It is important to show respect to seniority, regardless of merit.</h3>
+        
+            <label><input type="radio" name="PDI_3" value="1" required> 1</label>
+            
+            <label><input type="radio" name="PDI_3" value="2" required> 2</label>
+            
+            <label><input type="radio" name="PDI_3" value="3" required> 3</label>
+            
+            <label><input type="radio" name="PDI_3" value="4" required> 4</label>
+            
+            <label><input type="radio" name="PDI_3" value="5" required> 5</label>
+            </div>
+
+        <div class="question" id="q3">
+            <h3>I feel uneasy challenging someone in authority.</h3>
+        
+            <label><input type="radio" name="PDI_4" value="1" required> 1</label>
+            
+            <label><input type="radio" name="PDI_4" value="2" required> 2</label>
+            
+            <label><input type="radio" name="PDI_4" value="3" required> 3</label>
+            
+            <label><input type="radio" name="PDI_4" value="4" required> 4</label>
+            
+            <label><input type="radio" name="PDI_4" value="5" required> 5</label>
+            </div>
+
+        <div class="question" id="q4">
+            <h3>Titles and formal positions matter a lot in how I treat others.</h3>
+        
+            <label><input type="radio" name="PDI_5" value="1" required> 1</label>
+            
+            <label><input type="radio" name="PDI_5" value="2" required> 2</label>
+            
+            <label><input type="radio" name="PDI_5" value="3" required> 3</label>
+            
+            <label><input type="radio" name="PDI_5" value="4" required> 4</label>
+            
+            <label><input type="radio" name="PDI_5" value="5" required> 5</label>
+            </div>
+
+        <div class="question" id="q5">
+            <h3>I prefer to work independently rather than in a group.</h3>
+        
+            <label><input type="radio" name="IDV_1" value="1" required> 1</label>
+            
+            <label><input type="radio" name="IDV_1" value="2" required> 2</label>
+            
+            <label><input type="radio" name="IDV_1" value="3" required> 3</label>
+            
+            <label><input type="radio" name="IDV_1" value="4" required> 4</label>
+            
+            <label><input type="radio" name="IDV_1" value="5" required> 5</label>
+            </div>
+
+        <div class="question" id="q6">
+            <h3>Personal achievement matters more to me than team success.</h3>
+        
+            <label><input type="radio" name="IDV_2" value="1" required> 1</label>
+            
+            <label><input type="radio" name="IDV_2" value="2" required> 2</label>
+            
+            <label><input type="radio" name="IDV_2" value="3" required> 3</label>
+            
+            <label><input type="radio" name="IDV_2" value="4" required> 4</label>
+            
+            <label><input type="radio" name="IDV_2" value="5" required> 5</label>
+            </div>
+
+        <div class="question" id="q7">
+            <h3>I feel comfortable making decisions that are good for me, even if others disagree.</h3>
+        
+            <label><input type="radio" name="IDV_3" value="1" required> 1</label>
+            
+            <label><input type="radio" name="IDV_3" value="2" required> 2</label>
+            
+            <label><input type="radio" name="IDV_3" value="3" required> 3</label>
+            
+            <label><input type="radio" name="IDV_3" value="4" required> 4</label>
+            
+            <label><input type="radio" name="IDV_3" value="5" required> 5</label>
+            </div>
+
+        <div class="question" id="q8">
+            <h3>Loyalty to my team or community is important to me.</h3>
+        
+            <label><input type="radio" name="IDV_4" value="1" required> 1</label>
+            
+            <label><input type="radio" name="IDV_4" value="2" required> 2</label>
+            
+            <label><input type="radio" name="IDV_4" value="3" required> 3</label>
+            
+            <label><input type="radio" name="IDV_4" value="4" required> 4</label>
+            
+            <label><input type="radio" name="IDV_4" value="5" required> 5</label>
+            </div>
+
+        <div class="question" id="q9">
+            <h3>I value standing out more than fitting in.</h3>
+        
+            <label><input type="radio" name="IDV_5" value="1" required> 1</label>
+            
+            <label><input type="radio" name="IDV_5" value="2" required> 2</label>
+            
+            <label><input type="radio" name="IDV_5" value="3" required> 3</label>
+            
+            <label><input type="radio" name="IDV_5" value="4" required> 4</label>
+            
+            <label><input type="radio" name="IDV_5" value="5" required> 5</label>
+            </div>
+
+        <div class="question" id="q10">
+            <h3>I admire people who are ambitious and assertive.</h3>
+        
+            <label><input type="radio" name="MAS_1" value="1" required> 1</label>
+            
+            <label><input type="radio" name="MAS_1" value="2" required> 2</label>
+            
+            <label><input type="radio" name="MAS_1" value="3" required> 3</label>
+            
+            <label><input type="radio" name="MAS_1" value="4" required> 4</label>
+            
+            <label><input type="radio" name="MAS_1" value="5" required> 5</label>
+            </div>
+
+        <div class="question" id="q11">
+            <h3>I believe success is measured primarily by achievements and results.</h3>
+        
+            <label><input type="radio" name="MAS_2" value="1" required> 1</label>
+            
+            <label><input type="radio" name="MAS_2" value="2" required> 2</label>
+            
+            <label><input type="radio" name="MAS_2" value="3" required> 3</label>
+            
+            <label><input type="radio" name="MAS_2" value="4" required> 4</label>
+            
+            <label><input type="radio" name="MAS_2" value="5" required> 5</label>
+            </div>
+
+        <div class="question" id="q12">
+            <h3>It’s important to compete and be the best.</h3>
+        
+            <label><input type="radio" name="MAS_3" value="1" required> 1</label>
+            
+            <label><input type="radio" name="MAS_3" value="2" required> 2</label>
+            
+            <label><input type="radio" name="MAS_3" value="3" required> 3</label>
+            
+            <label><input type="radio" name="MAS_3" value="4" required> 4</label>
+            
+            <label><input type="radio" name="MAS_3" value="5" required> 5</label>
+            </div>
+
+        <div class="question" id="q13">
+            <h3>I prefer cooperation over competition.</h3>
+        
+            <label><input type="radio" name="MAS_4" value="1" required> 1</label>
+            
+            <label><input type="radio" name="MAS_4" value="2" required> 2</label>
+            
+            <label><input type="radio" name="MAS_4" value="3" required> 3</label>
+            
+            <label><input type="radio" name="MAS_4" value="4" required> 4</label>
+            
+            <label><input type="radio" name="MAS_4" value="5" required> 5</label>
+            </div>
+
+        <div class="question" id="q14">
+            <h3>I value quality of life more than material success.</h3>
+        
+            <label><input type="radio" name="MAS_5" value="1" required> 1</label>
+            
+            <label><input type="radio" name="MAS_5" value="2" required> 2</label>
+            
+            <label><input type="radio" name="MAS_5" value="3" required> 3</label>
+            
+            <label><input type="radio" name="MAS_5" value="4" required> 4</label>
+            
+            <label><input type="radio" name="MAS_5" value="5" required> 5</label>
+            </div>
+
+        <div class="question" id="q15">
+            <h3>I feel uncomfortable with unstructured or ambiguous situations.</h3>
+        
+            <label><input type="radio" name="UAI_1" value="1" required> 1</label>
+            
+            <label><input type="radio" name="UAI_1" value="2" required> 2</label>
+            
+            <label><input type="radio" name="UAI_1" value="3" required> 3</label>
+            
+            <label><input type="radio" name="UAI_1" value="4" required> 4</label>
+            
+            <label><input type="radio" name="UAI_1" value="5" required> 5</label>
+            </div>
+
+        <div class="question" id="q16">
+            <h3>I prefer clear rules and policies at work.</h3>
+        
+            <label><input type="radio" name="UAI_2" value="1" required> 1</label>
+            
+            <label><input type="radio" name="UAI_2" value="2" required> 2</label>
+            
+            <label><input type="radio" name="UAI_2" value="3" required> 3</label>
+            
+            <label><input type="radio" name="UAI_2" value="4" required> 4</label>
+            
+            <label><input type="radio" name="UAI_2" value="5" required> 5</label>
+            </div>
+
+        <div class="question" id="q17">
+            <h3>I feel anxious if plans are not clearly defined.</h3>
+        
+            <label><input type="radio" name="UAI_3" value="1" required> 1</label>
+            
+            <label><input type="radio" name="UAI_3" value="2" required> 2</label>
+            
+            <label><input type="radio" name="UAI_3" value="3" required> 3</label>
+            
+            <label><input type="radio" name="UAI_3" value="4" required> 4</label>
+            
+            <label><input type="radio" name="UAI_3" value="5" required> 5</label>
+            </div>
+
+        <div class="question" id="q18">
+            <h3>I adapt quickly to change.</h3>
+        
+            <label><input type="radio" name="UAI_4" value="1" required> 1</label>
+            
+            <label><input type="radio" name="UAI_4" value="2" required> 2</label>
+            
+            <label><input type="radio" name="UAI_4" value="3" required> 3</label>
+            
+            <label><input type="radio" name="UAI_4" value="4" required> 4</label>
+            
+            <label><input type="radio" name="UAI_4" value="5" required> 5</label>
+            </div>
+
+        <div class="question" id="q19">
+            <h3>I like taking risks in new environments.</h3>
+        
+            <label><input type="radio" name="UAI_5" value="1" required> 1</label>
+            
+            <label><input type="radio" name="UAI_5" value="2" required> 2</label>
+            
+            <label><input type="radio" name="UAI_5" value="3" required> 3</label>
+            
+            <label><input type="radio" name="UAI_5" value="4" required> 4</label>
+            
+            <label><input type="radio" name="UAI_5" value="5" required> 5</label>
+            </div>
+
+        <div class="question" id="q20">
+            <h3>I believe persistence and long-term planning lead to success.</h3>
+        
+            <label><input type="radio" name="LTO_1" value="1" required> 1</label>
+            
+            <label><input type="radio" name="LTO_1" value="2" required> 2</label>
+            
+            <label><input type="radio" name="LTO_1" value="3" required> 3</label>
+            
+            <label><input type="radio" name="LTO_1" value="4" required> 4</label>
+            
+            <label><input type="radio" name="LTO_1" value="5" required> 5</label>
+            </div>
+
+        <div class="question" id="q21">
+            <h3>Traditions should guide decisions even if they delay progress.</h3>
+        
+            <label><input type="radio" name="LTO_2" value="1" required> 1</label>
+            
+            <label><input type="radio" name="LTO_2" value="2" required> 2</label>
+            
+            <label><input type="radio" name="LTO_2" value="3" required> 3</label>
+            
+            <label><input type="radio" name="LTO_2" value="4" required> 4</label>
+            
+            <label><input type="radio" name="LTO_2" value="5" required> 5</label>
+            </div>
+
+        <div class="question" id="q22">
+            <h3>I am willing to delay short-term rewards for future gain.</h3>
+        
+            <label><input type="radio" name="LTO_3" value="1" required> 1</label>
+            
+            <label><input type="radio" name="LTO_3" value="2" required> 2</label>
+            
+            <label><input type="radio" name="LTO_3" value="3" required> 3</label>
+            
+            <label><input type="radio" name="LTO_3" value="4" required> 4</label>
+            
+            <label><input type="radio" name="LTO_3" value="5" required> 5</label>
+            </div>
+
+        <div class="question" id="q23">
+            <h3>I find it hard to follow long-term plans.</h3>
+        
+            <label><input type="radio" name="LTO_4" value="1" required> 1</label>
+            
+            <label><input type="radio" name="LTO_4" value="2" required> 2</label>
+            
+            <label><input type="radio" name="LTO_4" value="3" required> 3</label>
+            
+            <label><input type="radio" name="LTO_4" value="4" required> 4</label>
+            
+            <label><input type="radio" name="LTO_4" value="5" required> 5</label>
+            </div>
+
+        <div class="question" id="q24">
+            <h3>I think flexibility is more important than sticking to old values.</h3>
+        
+            <label><input type="radio" name="LTO_5" value="1" required> 1</label>
+            
+            <label><input type="radio" name="LTO_5" value="2" required> 2</label>
+            
+            <label><input type="radio" name="LTO_5" value="3" required> 3</label>
+            
+            <label><input type="radio" name="LTO_5" value="4" required> 4</label>
+            
+            <label><input type="radio" name="LTO_5" value="5" required> 5</label>
+            </div>
+
+        <div class="question" id="q25">
+            <h3>I believe enjoying life and having fun is important.</h3>
+        
+            <label><input type="radio" name="IVR_1" value="1" required> 1</label>
+            
+            <label><input type="radio" name="IVR_1" value="2" required> 2</label>
+            
+            <label><input type="radio" name="IVR_1" value="3" required> 3</label>
+            
+            <label><input type="radio" name="IVR_1" value="4" required> 4</label>
+            
+            <label><input type="radio" name="IVR_1" value="5" required> 5</label>
+            </div>
+
+        <div class="question" id="q26">
+            <h3>I freely express my emotions and opinions.</h3>
+        
+            <label><input type="radio" name="IVR_2" value="1" required> 1</label>
+            
+            <label><input type="radio" name="IVR_2" value="2" required> 2</label>
+            
+            <label><input type="radio" name="IVR_2" value="3" required> 3</label>
+            
+            <label><input type="radio" name="IVR_2" value="4" required> 4</label>
+            
+            <label><input type="radio" name="IVR_2" value="5" required> 5</label>
+            </div>
+
+        <div class="question" id="q27">
+            <h3>I often feel guilty for indulging myself.</h3>
+        
+            <label><input type="radio" name="IVR_3" value="1" required> 1</label>
+            
+            <label><input type="radio" name="IVR_3" value="2" required> 2</label>
+            
+            <label><input type="radio" name="IVR_3" value="3" required> 3</label>
+            
+            <label><input type="radio" name="IVR_3" value="4" required> 4</label>
+            
+            <label><input type="radio" name="IVR_3" value="5" required> 5</label>
+            </div>
+
+        <div class="question" id="q28">
+            <h3>Life should be about enjoyment, not just duty.</h3>
+        
+            <label><input type="radio" name="IVR_4" value="1" required> 1</label>
+            
+            <label><input type="radio" name="IVR_4" value="2" required> 2</label>
+            
+            <label><input type="radio" name="IVR_4" value="3" required> 3</label>
+            
+            <label><input type="radio" name="IVR_4" value="4" required> 4</label>
+            
+            <label><input type="radio" name="IVR_4" value="5" required> 5</label>
+            </div>
+
+        <div class="question" id="q29">
+            <h3>I believe discipline is more important than pleasure.</h3>
+        
+            <label><input type="radio" name="IVR_5" value="1" required> 1</label>
+            
+            <label><input type="radio" name="IVR_5" value="2" required> 2</label>
+            
+            <label><input type="radio" name="IVR_5" value="3" required> 3</label>
+            
+            <label><input type="radio" name="IVR_5" value="4" required> 4</label>
+            
+            <label><input type="radio" name="IVR_5" value="5" required> 5</label>
+            </div>
+
+    <div class="nav-buttons">
+        <button type="button" onclick="prevQuestion()">Back</button>
+        <button type="button" onclick="nextQuestion()">Next</button>
+    </div>
+    <button type="button" onclick="submitAssessment()" id="submitBtn" style="display:none;">Submit</button>
+    </form>
+    <div id="report"></div>
+
+<script>
+let current = 0;
+const totalQuestions = 30;
+const questionIds = ['PDI_1', 'PDI_2', 'PDI_3', 'PDI_4', 'PDI_5', 'IDV_1', 'IDV_2', 'IDV_3', 'IDV_4', 'IDV_5', 'MAS_1', 'MAS_2', 'MAS_3', 'MAS_4', 'MAS_5', 'UAI_1', 'UAI_2', 'UAI_3', 'UAI_4', 'UAI_5', 'LTO_1', 'LTO_2', 'LTO_3', 'LTO_4', 'LTO_5', 'IVR_1', 'IVR_2', 'IVR_3', 'IVR_4', 'IVR_5'];
+const reverseMap = {"IDV": [4], "MAS": [4, 5], "UAI": [4, 5], "LTO": [4, 5], "IVR": [3, 5]};
+
+function showQuestion(index) {
+    document.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
+    document.getElementById('q' + index).classList.add('active');
+    document.querySelector('button[onclick="prevQuestion()"]').style.display = index === 0 ? 'none' : 'inline-block';
+    document.getElementById('submitBtn').style.display = index === totalQuestions - 1 ? 'inline-block' : 'none';
+    document.querySelector('button[onclick="nextQuestion()"]').style.display = index === totalQuestions - 1 ? 'none' : 'inline-block';
+}
+
+function nextQuestion() {
+    const radios = document.querySelectorAll('#q' + current + ' input[type="radio"]');
+    let answered = false;
+    radios.forEach(r => { if (r.checked) answered = true; });
+    if (!answered) {
+        alert("Please select a response before proceeding.");
+        return;
+    }
+    if (current < totalQuestions - 1) {
+        current++;
+        showQuestion(current);
+    }
+}
+
+function prevQuestion() {
+    if (current > 0) {
+        current--;
+        showQuestion(current);
+    }
+}
+
+function submitAssessment() {
+    let scores = {"PDI":0, "IDV":0, "MAS":0, "UAI":0, "LTO":0, "IVR":0};
+
+    questionIds.forEach(id => {
+        let val = parseInt(document.querySelector('input[name="' + id + '"]:checked').value);
+        let [dim, idx] = id.split("_");
+        idx = parseInt(idx);
+        if (reverseMap[dim] && reverseMap[dim].includes(idx)) {
+            val = 6 - val;
+        }
+        scores[dim] += val;
+    });
+
+    let report = "<h2>Your Cultural Profile</h2>";
+
+    report += `<p><strong>PDI - Power Distance Index</strong>: ${scores["PDI"]} / 25<br><em>A high score indicates comfort with hierarchy and unequal power distribution. A low score suggests preference for equality and decentralized decision-making.</em></p>`;
+
+    
+    report += `<p><strong>IDV - Individualism vs. Collectivism</strong>: ${scores["IDV"]} / 25<br><em>A high score suggests a preference for individual goals and autonomy. A low score indicates collectivist values, where loyalty and group harmony matter more.</em></p>`;
+
+    
+    report += `<p><strong>MAS - Masculinity vs. Femininity</strong>: ${scores["MAS"]} / 25<br><em>A high score reflects competitiveness, ambition, and achievement. A low score emphasizes quality of life, relationships, and care.</em></p>`;
+
+    
+    report += `<p><strong>UAI - Uncertainty Avoidance Index</strong>: ${scores["UAI"]} / 25<br><em>A high score indicates discomfort with ambiguity and preference for rules and structure. A low score suggests comfort with uncertainty and change.</em></p>`;
+
+    
+    report += `<p><strong>LTO - Long-Term Orientation</strong>: ${scores["LTO"]} / 25<br><em>A high score reflects a future-oriented mindset, persistence, and adaptability. A low score values tradition, immediate results, and consistency.</em></p>`;
+
+    
+    report += `<p><strong>IVR - Indulgence vs. Restraint</strong>: ${scores["IVR"]} / 25<br><em>A high score indicates a tendency to enjoy life and express emotions. A low score reflects self-discipline, control, and social norms limiting gratification.</em></p>`;
+
+    
+    document.getElementById("report").innerHTML = report;
+    document.getElementById("assessmentForm").style.display = "none";
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    showQuestion(current);
+});
+</script>
+</body>
+</html>
