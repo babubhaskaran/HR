@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Performance Management System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f7f7f7;
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    form {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    fieldset {
+      border: 1px solid #ccc;
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input[type="text"], input[type="number"], textarea {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 15px;
+    }
+    #goalSection, #summary {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Performance Management System</h1>
+
+  <section id="loginSection">
+    <form id="loginForm">
+      <h2>Login</h2>
+      <label>Username:
+        <input type="text" id="username" required>
+      </label>
+      <label>Password:
+        <input type="password" id="password" required>
+      </label>
+      <button type="submit">Login</button>
+    </form>
+  </section>
+
+  <section id="goalSection">
+    <form id="goalForm">
+      <h2>Set Your Goals</h2>
+      <div id="goalsContainer"></div>
+      <button type="button" id="addGoalBtn">Add Goal</button>
+
+      <h2>Individual Development Plan</h2>
+      <label>Cost Leadership
+        <textarea id="idp0" required></textarea>
+      </label>
+      <label>Nurturing and Inclusion
+        <textarea id="idp1" required></textarea>
+      </label>
+      <label>Customer Orientation
+        <textarea id="idp2" required></textarea>
+      </label>
+      <label>Category 1
+        <textarea id="idp3" required></textarea>
+      </label>
+      <label>Category 2
+        <textarea id="idp4" required></textarea>
+      </label>
+
+      <button type="submit">Submit Goals</button>
+    </form>
+  </section>
+
+  <section id="summary"></section>
+
+  <script>
+    const loginForm = document.getElementById('loginForm');
+    const goalSection = document.getElementById('goalSection');
+    const goalsContainer = document.getElementById('goalsContainer');
+    const addGoalBtn = document.getElementById('addGoalBtn');
+    const goalForm = document.getElementById('goalForm');
+    const summary = document.getElementById('summary');
+
+    let goalCount = 0;
+
+    function createGoalFields(num) {
+      const fieldset = document.createElement('fieldset');
+      fieldset.className = 'goal';
+      fieldset.innerHTML = `
+        <legend>Goal ${num}</legend>
+        <label>Goal Name
+          <input type="text" name="goalName${num}" required>
+        </label>
+        <label>Goal Description
+          <textarea name="goalDesc${num}" required></textarea>
+        </label>
+        <label>Target
+          <input type="text" name="goalTarget${num}" required>
+        </label>
+        <label>Weightage (%)
+          <input type="number" name="goalWeight${num}" min="10" max="40" required>
+        </label>
+      `;
+      return fieldset;
+    }
+
+    function addGoal() {
+      if (goalCount >= 5) return;
+      goalCount++;
+      goalsContainer.appendChild(createGoalFields(goalCount));
+      if (goalCount >= 5) addGoalBtn.disabled = true;
+    }
+
+    // initialize with 3 goals
+    for (let i = 0; i < 3; i++) addGoal();
+
+    addGoalBtn.addEventListener('click', addGoal);
+
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const user = document.getElementById('username').value;
+      const pass = document.getElementById('password').value;
+      if (user === 'employee' && pass === 'password') {
+        document.getElementById('loginSection').style.display = 'none';
+        goalSection.style.display = 'block';
+      } else {
+        alert('Invalid credentials');
+      }
+    });
+
+    goalForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (goalCount < 3) {
+        alert('Please provide at least 3 goals.');
+        return;
+      }
+      const goals = document.querySelectorAll('.goal');
+      for (const g of goals) {
+        const weight = parseFloat(g.querySelector('input[type="number"]').value);
+        if (isNaN(weight) || weight < 10 || weight > 40) {
+          alert('Each goal\'s weightage must be between 10% and 40%.');
+          return;
+        }
+      }
+      summary.style.display = 'block';
+      summary.innerHTML = '<h2>Submitted Goals</h2>';
+      goals.forEach((g, idx) => {
+        const name = g.querySelector('input[type="text"]').value;
+        const desc = g.querySelector('textarea').value;
+        const target = g.querySelector('input[name^="goalTarget"]').value;
+        const weight = g.querySelector('input[type="number"]').value;
+        summary.innerHTML += `<p><strong>Goal ${idx + 1}</strong>: ${name} - ${desc} (Target: ${target}, Weightage: ${weight}%)</p>`;
+      });
+      summary.innerHTML += '<h2>IDP</h2>';
+      const idpCats = ['Cost Leadership','Nurturing and Inclusion','Customer Orientation','Category 1','Category 2'];
+      idpCats.forEach((cat, i) => {
+        const val = document.getElementById('idp' + i).value;
+        summary.innerHTML += `<p><strong>${cat}:</strong> ${val}</p>`;
+      });
+    });
+  </script>
+</body>
+</html>
