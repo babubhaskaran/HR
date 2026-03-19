@@ -1,66 +1,106 @@
-# Executive Swipe Decision Accelerator
+# Task Manager (Next.js + Supabase)
 
-A lightweight task-management web app focused on executive decision velocity. Tasks are reviewed one at a time using swipe gestures and keyboard shortcuts.
+Production-ready task manager built with Next.js App Router, Supabase Auth/Database, TypeScript, and Tailwind CSS.
 
-## Stack
-- **Frontend:** React (CDN + JSX via Babel)
-- **Backend:** Node.js + Express
-- **Database:** SQLite
-- **Auth:** Email/password + JWT
+## Features
 
-## Project structure
+- Email/password login with Supabase Auth
+- Redirect unauthenticated users to `/login` from dashboard session check
+- Task dashboard for authenticated users only
+- CRUD for tasks (create, inline edit, delete)
+- Status and priority updates
+- Filters by status and priority
+- Dark, mobile-friendly UI
 
-- `server.js` - Express server and REST API routes
-- `server/db.js` - SQLite schema + seed helpers
-- `scripts/seed.js` - Manual seed runner
-- `public/index.html` - Frontend shell
-- `public/app.jsx` - Swipe UI, filters, modal editing
-- `public/styles.css` - Mobile-first styles with RAG accents
+## Tech Stack
 
-## Features delivered
-- Swipe review mode with one-task-at-a-time cards
-  - Right: Keep active
-  - Left: Soft-delete (archive)
-  - Down: Move to MONITOR
-  - Up: Open comment/edit modal
-  - Tap: View full details
-- Filtering by horizon, country, theme, parent/sub-task scope
-- Parent container support with progress indicator (`x/y complete`)
-- Comment/edit panel to update responsibility, horizon, notes, RAG
-- Convert any task to parent container and add sub-tasks
-- Basic auth (register/login)
-- Decision velocity dashboard (reviewed today, keep/delete ratio, horizon distribution)
-- Keyboard shortcuts
-  - `→` Keep
-  - `←` Delete
-  - `↑` Comment/Edit
-  - `↓` Move to MONITOR
+- Next.js (App Router)
+- TypeScript
+- Tailwind CSS
+- Supabase (`@supabase/supabase-js`)
 
-## Setup
+## Project Structure
+
+```txt
+/app
+  /components
+    task-dashboard.tsx
+  /dashboard
+    page.tsx
+  /login
+    page.tsx
+  globals.css
+  layout.tsx
+  page.tsx
+/lib
+  supabaseClient.ts
+```
+
+## 1) Run locally
 
 ```bash
 npm install
-npm run seed
-npm start
+cp .env.example .env.local
+npm run dev
 ```
 
-Then open: `http://localhost:3000`
+Open http://localhost:3000
 
-## API overview
+## 2) Connect Supabase
 
-### Auth
-- `POST /api/auth/register`
-- `POST /api/auth/login`
+Create a Supabase project and set environment variables in `.env.local`:
 
-### Tasks
-- `GET /api/tasks?horizon=NOW&country=UK&theme=Operations&scope=parents&parent_id=<id>`
-- `GET /api/tasks/:id`
-- `POST /api/tasks`
-- `PATCH /api/tasks/:id`
-- `POST /api/tasks/:id/swipe` with `{ "action": "keep|delete|defer" }`
+```env
+NEXT_PUBLIC_SUPABASE_URL=...
+NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+```
 
-### Dashboard
-- `GET /api/dashboard/velocity`
+Create table and enable RLS:
 
-## Seed data
-Includes a parent container task (`Warehouse Stabilization Program`) with sub-tasks and one MONITOR task.
+```sql
+create table if not exists public.tasks (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  title text not null,
+  description text,
+  notes text,
+  status text not null default 'Not Started',
+  priority text not null default 'Medium',
+  owner text,
+  region text,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+alter table public.tasks enable row level security;
+
+create policy "Users can read own tasks"
+on public.tasks for select
+using (auth.uid() = user_id);
+
+create policy "Users can insert own tasks"
+on public.tasks for insert
+with check (auth.uid() = user_id);
+
+create policy "Users can update own tasks"
+on public.tasks for update
+using (auth.uid() = user_id)
+with check (auth.uid() = user_id);
+
+create policy "Users can delete own tasks"
+on public.tasks for delete
+using (auth.uid() = user_id);
+```
+
+In Supabase Auth settings, enable email/password sign-in. Create at least one user in Authentication > Users.
+
+## 3) Deploy to Vercel
+
+1. Push repository to GitHub.
+2. Import project into Vercel.
+3. Add environment variables in Vercel project settings:
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+4. Deploy.
+
+Vercel build command: `npm run build`
